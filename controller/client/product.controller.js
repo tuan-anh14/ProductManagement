@@ -1,5 +1,6 @@
 const Product = require("../../model/product.model")
 
+//[GET] /products
 module.exports.index = async (req, res) => {
     try {
         const products = await Product.find({
