@@ -7,7 +7,23 @@ block main
     .card.mb-3
       .card-header Bộ lọc và Tìm kiếm
       .card-body
-        +filter-status(filterStatus)
+        .row
+          .col-6
+            +filter-status(filterStatus)
+          .col-6
+            form(id="form-search")
+              .input-group
+                input(
+                  type="text"
+                  placeholder="Nhập từ khoá"
+                  name="keyword"
+                  class="form-control"
+                )
+                .input-group-append
+                  button(
+                    class="btn btn-success"
+                    type="submit"
+                  ) Tìm   
 
     .card.mb-3
         .card-header Danh sách sản phẩm
