@@ -1,35 +1,9 @@
 const Product = require("../../model/product.model");
+const filterStatusHelpers = require("../../helpers/filterStatus")
 
 //[GET] /admin/products
 module.exports.products = async (req, res) => {
-  // console.log(req.query.status)
-  let filterStatus = [
-    {
-      name: "Tất cả",
-      status: "",
-      class: ""
-    },
-
-    {
-      name: "Hoạt động",
-      status: "active",
-      class: ""
-    },
-
-    {
-      name: "Dừng hoạt động",
-      status: "inactive",
-      class: ""
-    }
-  ]
-
-  if(req.query.status){
-    const index = filterStatus.findIndex( (item) => (item.status == req.query.status))
-    filterStatus[index].class = "active"
-  }else {
-    const index = filterStatus.findIndex( (item) => (item.status == ""))
-    filterStatus[index].class = "active"
-  }
+  const filterStatus = filterStatusHelpers(req.query)
 
 
   let find = {
