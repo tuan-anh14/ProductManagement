@@ -82,6 +82,8 @@ module.exports.changeMulti = async (req, res) => {
 };
 
 //[DELETE] /admin/products/delete/:id
+//FOREVER
+/*
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
 
@@ -89,6 +91,16 @@ module.exports.deleteItem = async (req, res) => {
 
   res.redirect("back");
 };
+*/
 
+//[DELETE] /admin/products/delete/:id
+//SOFT
+module.exports.deleteItem = async (req, res) => {
+  const id = req.params.id;
+
+  await Product.updateOne({ _id: id }, {deleted: true});
+
+  res.redirect("back");
+};
 
 
