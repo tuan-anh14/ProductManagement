@@ -21,6 +21,8 @@ app.use(express.static(`${__dirname}/public`));
 app.use(methodOverride("_method"));
 
 database.connect();
+// Tiny MCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
