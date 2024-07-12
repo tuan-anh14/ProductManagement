@@ -5,7 +5,7 @@ const roleSchema = new mongoose.Schema(
     title: String,
     description: String,
     permission: {
-        type: array,
+        type: Array,
         default: []
     },
     deleted: {
