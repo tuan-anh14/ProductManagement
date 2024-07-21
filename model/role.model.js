@@ -4,18 +4,18 @@ const roleSchema = new mongoose.Schema(
   {
     title: String,
     description: String,
-    permission: {
-        type: Array,
-        default: []
+    permissions: {
+      type: Array,
+      default: []
     },
     deleted: {
       type: Boolean,
-      default: false,
+      default: false
     },
-    deletedAt: Date,
+    deletedAt: Date
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 

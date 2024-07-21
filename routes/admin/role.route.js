@@ -9,4 +9,8 @@ route.get("/create", controller.create);
 
 route.post("/create", controller.createPost);
 
+route.get("/permissions", controller.permissions);
+
+route.patch("/permissions", controller.permissionsPatch);
+
 module.exports = route;
