@@ -13,6 +13,7 @@ router.post(
 
 );
 
+router.get("/logout", controller.logout);
 
 module.exports = router
 
