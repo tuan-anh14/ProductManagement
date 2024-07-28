@@ -1,9 +1,10 @@
 const Product = require("../../model/product.model");
+const Account = require("../../model/account.model");
 const filterStatusHelpers = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
-const createTreeHelper = require("../../helpers/createTree") 
+const createTreeHelper = require("../../helpers/createTree");
 const ProductCategory = require("../../model/product-category.model");
 
 //[GET] /admin/products
@@ -40,13 +41,12 @@ module.exports.products = async (req, res) => {
   //End Pagination
 
   // Sort
-  let sort = {
-  }
+  let sort = {};
 
-  if(req.query.sortKey && req.query.sortValue){
-    sort[req.query.sortKey] = req.query.sortValue
-  }else{
-    sort.position = "desc"
+  if (req.query.sortKey && req.query.sortValue) {
+    sort[req.query.sortKey] = req.query.sortValue;
+  } else {
+    sort.position = "desc";
   }
   // End Sort
 
@@ -54,6 +54,17 @@ module.exports.products = async (req, res) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
+
+  for (const product of products) {
+    const user = await Account.findOne({
+      _id: product.createdBy.account_id,
+    });
+
+    if (user) {
+      product.accountFullName = user.fullName;
+    }
+  }
+
   // console.log(products)
 
   res.render("admin/pages/products/index.pug", {
@@ -165,17 +176,19 @@ module.exports.deleteItem = async (req, res) => {
 
 //[GET] /admin/products/create
 module.exports.create = async (req, res) => {
-  let find = {
-    deleted: false
-  }
-  
-  const category = await ProductCategory.find(find)
+  console.log(res.locals.user);
 
-  const newCategory = createTreeHelper.tree(category)
+  let find = {
+    deleted: false,
+  };
+
+  const category = await ProductCategory.find(find);
+
+  const newCategory = createTreeHelper.tree(category);
 
   res.render("admin/pages/products/create.pug", {
     pageTitle: "Thêm mới sản phẩm",
-    category: newCategory
+    category: newCategory,
   });
 };
 
@@ -192,6 +205,10 @@ module.exports.createPost = async (req, res) => {
     req.body.position == parseInt(req.body.position);
   }
 
+  req.body.createdBy = {
+    account_id: res.locals.user.id,
+  };
+
   const product = new Product(req.body);
   await product.save();
 
@@ -207,17 +224,17 @@ module.exports.edit = async (req, res) => {
     };
 
     const product = await Product.findOne(find);
-    
+
     const category = await ProductCategory.find({
-      deleted: false
-    })
-  
-    const newCategory = createTreeHelper.tree(category)
+      deleted: false,
+    });
+
+    const newCategory = createTreeHelper.tree(category);
 
     res.render("admin/pages/products/edit.pug", {
       pageTitle: "Chỉnh sửa sản phẩm",
       product: product,
-      category: newCategory
+      category: newCategory,
     });
   } catch (error) {
     res.redirect(`${systemConfig.prefixAdmin}/products`);
@@ -243,7 +260,7 @@ module.exports.editPatch = async (req, res) => {
         _id: id,
       },
       req.body
-    );  
+    );
     req.flash("success", `Đã cập nhật thành công sản phẩm!`);
   } catch (error) {
     req.flash("error", `Cập nhật sản phẩm thất bại!`);
