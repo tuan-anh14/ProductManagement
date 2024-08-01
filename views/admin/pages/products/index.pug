@@ -108,6 +108,13 @@ block main
                                     p #{item.accountFullName}
                                     p
                                         +formatDate(item)
+                                //- Log sửa sản phẩm
+                                //- td 
+                                //-     - var updatedBy = item.updateBy[product.updateBy.length - 1];
+                                    if(updatedBy)
+                                //-     p #{item.accountFullName}
+                                //-     p
+                                //-         +formatDate(updatedBy.updatedAt)
                                 td  
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}`

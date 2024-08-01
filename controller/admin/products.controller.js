@@ -6,6 +6,7 @@ const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 const createTreeHelper = require("../../helpers/createTree");
 const ProductCategory = require("../../model/product-category.model");
+const { now } = require("mongoose");
 
 //[GET] /admin/products
 module.exports.products = async (req, res) => {
@@ -56,6 +57,7 @@ module.exports.products = async (req, res) => {
     .skip(objectPagination.skip);
 
   for (const product of products) {
+    // Lấy ra thông tin người tạo
     const user = await Account.findOne({
       _id: product.createdBy.account_id,
     });
@@ -63,7 +65,22 @@ module.exports.products = async (req, res) => {
     if (user) {
       product.accountFullName = user.fullName;
     }
-  }
+
+    //Lấy ra thông tin người cập nhật gần nhất
+    // const updateBy = product.updateBy[product.updateBy.length - 1];
+
+    // console.log(updateBy)
+
+    // if (updateBy) { 
+    //   const userUpdated = await Account.findOne({
+    //     _id: updateBy.account_id,
+    //   });
+
+    //   updateBy.accountFullName = userUpdated.fullName;
+
+    //   console.log(product);
+    }
+  
 
   // console.log(products)
 
@@ -119,7 +136,7 @@ module.exports.changeMulti = async (req, res) => {
           deletedBy: {
             account_id: res.locals.user.id,
             deletedAt: new Date(),
-          }
+          },
         }
       );
       req.flash("success", `Đã xoá thành công ${ids.length} sản phẩm!`);
@@ -174,7 +191,7 @@ module.exports.deleteItem = async (req, res) => {
       deletedBy: {
         account_id: res.locals.user.id,
         deletedAt: new Date(),
-      }
+      },
     }
   );
   req.flash("success", `Đã xoá thành công sản phẩm!`);
@@ -249,7 +266,7 @@ module.exports.edit = async (req, res) => {
   }
 };
 
-//[PATCH] /admin/products/edit/:id
+// [PATCH] /admin/products/edit/:id
 module.exports.editPatch = async (req, res) => {
   const id = req.params.id;
 
@@ -263,11 +280,19 @@ module.exports.editPatch = async (req, res) => {
   }
 
   try {
+    const updatedBy = {
+      account_id: res.locals.user.id,
+      updateAt: new Date(),
+    };
+
     await Product.updateOne(
       {
         _id: id,
       },
-      req.body
+      {
+        ...req.body,
+        $push: { updatedBy: updatedBy },
+      }
     );
     req.flash("success", `Đã cập nhật thành công sản phẩm!`);
   } catch (error) {
