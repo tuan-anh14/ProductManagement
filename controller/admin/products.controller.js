@@ -201,7 +201,7 @@ module.exports.deleteItem = async (req, res) => {
 
 //[GET] /admin/products/create
 module.exports.create = async (req, res) => {
-  console.log(res.locals.user);
+  // console.log(res.locals.user);
 
   let find = {
     deleted: false,
