@@ -1,5 +1,7 @@
 const Product = require("../../model/product.model");
 
+const productHelpers = require("../../helpers/product");
+
 //[GET] /products
 module.exports.index = async (req, res) => {
   try {
@@ -8,12 +10,7 @@ module.exports.index = async (req, res) => {
       deleted: false,
     }).sort({ position: "desc" });
 
-    const newProducts = products.map((item) => ({
-      ...item.toObject(), // Copy all properties of item
-      priceNew: ((item.price * (100 - item.discountPercentage)) / 100).toFixed(
-        0
-      ),
-    }));
+    const newProducts = productHelpers.priceNewProducts(products);
 
     res.render("client/pages/products/index", {
       pageTitle: "Danh sách sản phẩm",
@@ -25,26 +22,24 @@ module.exports.index = async (req, res) => {
   }
 };
 
-
 //[GET] /products/:slug
 module.exports.detail = async (req, res) => {
-    try {
-      const find = {
-        deleted: false,
-        slug: req.params.slug,
-        status: "active"
-      };
-  
-      const product = await Product.findOne(find);
+  try {
+    const find = {
+      deleted: false,
+      slug: req.params.slug,
+      status: "active",
+    };
 
-      // console.log(product)
-  
-      res.render("client/pages/products/detail.pug", {
-        pageTitle: product.title,
-        product: product,
-      });
-    } catch (error) {
-      res.redirect(`/products`);
-    }
-  };
+    const product = await Product.findOne(find);
 
+    // console.log(product)
+
+    res.render("client/pages/products/detail.pug", {
+      pageTitle: product.title,
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`/products`);
+  }
+};
