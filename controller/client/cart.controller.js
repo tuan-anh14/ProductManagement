@@ -11,7 +11,7 @@ module.exports.index = async (req, res) => {
     _id: cartId,
   });
 
-  if (cart.products.length > 0) {
+  if (cart && cart.products.length > 0) {
     for (const item of cart.products) {
       const productId = item.product_id;
 
@@ -23,17 +23,16 @@ module.exports.index = async (req, res) => {
 
       item.productInfo = productInfo;
 
-      item.totalPrice = cart.products.reduce(
-        (sum, item) => item.quantity * productInfo.priceNew,
-        0
-      );
+      item.totalPrice = item.quantity * productInfo.priceNew;
     }
-  }
 
-  cart.totalPrice = cart.products.reduce(
-    (sum, item) => sum + item.totalPrice,
-    0
-  );
+    cart.totalPrice = cart.products.reduce(
+      (sum, item) => sum + item.totalPrice,
+      0
+    );
+  } else {
+    cart.totalPrice = 0;
+  }
 
   res.render("client/pages/cart/index.pug", {
     pageTitle: "Giỏ hàng",
@@ -98,7 +97,7 @@ module.exports.delete = async (req, res) => {
       _id: cartId,
     },
     {
-      "$pull": { products: {"product_id": productId } },
+      $pull: { products: { product_id: productId } },
     }
   );
 
