@@ -7,9 +7,9 @@ const orderSchema = new mongoose.Schema(
     userInfo: {
       fullName: String,
       phone: Number,
-      adress: String,
+      address: String,
     },
-    product: [
+    products: [
         {
             product_id: String,
             price: Number,
