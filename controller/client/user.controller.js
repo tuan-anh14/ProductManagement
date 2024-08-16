@@ -11,7 +11,6 @@ module.exports.register = (req, res) => {
 
 // [POST] /user/register
 module.exports.registerPost = async (req, res) => {
-  console.log(req.body);
   const exitsEmail = await User.findOne({
     email: req.body.email,
     deleted: false,
@@ -30,7 +29,6 @@ module.exports.registerPost = async (req, res) => {
   const user = new User(req.body);
   await user.save();
 
-  console.log(user);
   res.cookie("tokenUser", user.tokenUser);
 
   res.redirect("/");
@@ -73,6 +71,12 @@ module.exports.loginPost = async (req, res) => {
 
   res.cookie("tokenUser", user.tokenUser);
 
-  console.log(req.body);
   res.redirect("/");
+};
+
+// [GET] /user/logout
+module.exports.logout = (req, res) => {
+  res.clearCookie("tokenUser")
+
+  res.redirect("/")
 };
