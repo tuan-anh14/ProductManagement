@@ -6,6 +6,7 @@ module.exports.sendMail = (email, subject, html) => {
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
+    //   Lấy mật khẩu trong mật khẩu ứng dụng trên google
     },
   });
 
