@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const generate = require("../helpers/generate");
 
 const forgotPasswordSchema = new mongoose.Schema(
   {

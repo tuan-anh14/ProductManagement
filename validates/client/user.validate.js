@@ -51,3 +51,28 @@ module.exports.forgotPasswordPost = async (req, res, next) => {
 
   next();
 };
+
+module.exports.resetPasswordPost = async (req, res, next) => {
+  if (!req.body.password) {
+    req.flash("error", "Mật khẩu không được để trống !");
+
+    res.redirect("back");
+    return;
+  }
+
+  if (!req.body.confirmPassword) {
+    req.flash("error", "Vui lòng xác nhận lại mật khẩu !");
+
+    res.redirect("back");
+    return;
+  }
+
+  if (req.body.confirmPassword != req.body.password) {
+    req.flash("error", "Mật khẩu không trùng khớp !");
+
+    res.redirect("back");
+    return;
+  }
+
+  next();
+};
