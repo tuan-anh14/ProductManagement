@@ -161,28 +161,28 @@ h1 {
 
 /* Product detail */
 
-.product-detail .inner-thumb img{
+.product-detail .inner-thumb img {
   width: 100%;
   height: auto;
 }
 
-.product-detail .inner-title{
+.product-detail .inner-title {
   font-size: 32px;
   margin-bottom: 15px;
 }
 
-.product-detail .inner-category{
+.product-detail .inner-category {
   margin-bottom: 10px;
 }
 
-.product-detail .inner-price-new{
+.product-detail .inner-price-new {
   color: green;
   font-weight: 600;
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-.product-detail .inner-price-old{
+.product-detail .inner-price-old {
   color: red;
   font-weight: 600;
   font-size: 20px;
@@ -190,11 +190,11 @@ h1 {
   margin-bottom: 10px;
 }
 
-.product-detail .inner-percent{
+.product-detail .inner-percent {
   margin-bottom: 10px;
 }
 
-.product-detail .inner-percent span{
+.product-detail .inner-percent span {
   color: #fff;
   background: red;
   font-weight: 600;
@@ -203,11 +203,11 @@ h1 {
   border-radius: 8px;
 }
 
-.product-detail .inner-stock{
+.product-detail .inner-stock {
   margin-bottom: 10px;
 }
 
-.product-detail .inner-stock span{
+.product-detail .inner-stock span {
   color: #fff;
   background: green;
   font-weight: 600;
@@ -216,7 +216,6 @@ h1 {
 }
 
 /* End product-detail */
-
 
 /* Show Alert */
 [show-alert] {
@@ -233,16 +232,15 @@ h1 {
 }
 
 @keyframes alert-hidden {
-  from{
-      right: 15px;
+  from {
+    right: 15px;
   }
   to {
-      right: -100%;
-      display: none;
+    right: -100%;
+    display: none;
   }
-  
 }
-[show-alert] [close-alert]{
+[show-alert] [close-alert] {
   background: #ffffffc4;
   display: inline-block;
   width: 24px;
@@ -256,3 +254,83 @@ h1 {
 
 /* End Show Alert */
 
+/* Chat */
+
+.chat {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inner-body {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
+.inner-incoming,
+.inner-outgoing {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 75%;
+}
+
+.inner-incoming {
+  background-color: #f1f1f1;
+  align-self: flex-start;
+}
+
+.inner-outgoing {
+  background-color: #fe5da3;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.inner-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.inner-content {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.inner-foot {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.chat .inner-form {
+  display: flex;
+  align-items: center;
+}
+
+.chat .inner-form input {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.chat .inner-form button {
+  border-radius: 15px;
+  border: 1px solid #fe5da3;
+  background: #fe5da3;
+  color: #fff;
+  height: 32px;
+  padding: 0 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.chat .inner-form button i {
+  font-size: 16px;
+}
+
+/* End Chat */
