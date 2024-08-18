@@ -120,10 +120,10 @@ module.exports.forgotPasswordPost = async (req, res) => {
   await forgotPassword.save();
 
   // Việc 2: Gửi mã OTP qua email của user
-  const subject = `Mã OTP xác minh lấy lại mật khẩu`
+  const subject = `Mã OTP xác minh lấy lại mật khẩu`;
   const html = `
     Mã OTP xác minh mật khẩu là: <b>${otp}</b>. Thời hạn sử dụng là 3 phút .Lưu ý không được để lộ mã OTP
-  `
+  `;
 
   sendMailHelpers.sendMail(email, subject, html);
 
@@ -191,4 +191,11 @@ module.exports.resetPasswordPost = async (req, res) => {
   req.flash("success", "Tạo mật khẩu thành công");
 
   res.redirect("/");
+};
+
+// [GET] /user/info
+module.exports.info = (req, res) => {
+  res.render("client/pages/user/info", {
+    pageTitle: "Thông tin tài khoản",
+  });
 };
