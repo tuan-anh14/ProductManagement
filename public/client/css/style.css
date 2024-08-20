@@ -255,7 +255,6 @@ h1 {
 /* End Show Alert */
 
 /* Chat */
-
 .chat {
   background-color: #f9f9f9;
   border-radius: 10px;
@@ -333,4 +332,31 @@ h1 {
   font-size: 16px;
 }
 
-/* End Chat */
+.fa-solid.fa-face-smile {
+  border-radius: 15px;
+  border: 1px solid #fe5da3;
+  background: #fe5da3;
+  color: #fff;
+  height: 32px;
+  width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* Emoji Picker Tooltip */
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tooltip.shown {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* End Emoji Picker Tooltip */
