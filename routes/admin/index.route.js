@@ -11,8 +11,12 @@ const authMiddleware = require("../../middlewares/admin/auth.middleware");
 
 const systemConfig = require("../../config/system");
 
+const authController = require("../../controller/admin/auth.controller") 
+
 module.exports = (app) => {
   const PATH_ADMIN = systemConfig.prefixAdmin;
+
+  app.get(PATH_ADMIN + "/", authController.login);
 
   app.use(
     PATH_ADMIN + "/dashboard",
