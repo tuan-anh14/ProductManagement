@@ -31,8 +31,6 @@ module.exports.index = async (req, res) => {
     deleted: false,
   });
 
-  console.log(chats);
-
   for (const chat of chats) {
     const infoUser = await User.findOne({
       _id: chat.user_id,
