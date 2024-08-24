@@ -271,20 +271,31 @@ h1 {
 .inner-incoming,
 .inner-outgoing {
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 10px 0;
   border-radius: 10px;
   max-width: 75%;
+  display: flex;
+  flex-direction: column;
 }
 
 .inner-incoming {
-  background-color: #f1f1f1;
+  background-color: transparent;
   align-self: flex-start;
 }
 
 .inner-outgoing {
-  background-color: #fe5da3;
   align-self: flex-end;
   margin-left: auto;
+  background-color: transparent;
+}
+
+.inner-outgoing .inner-content,
+.inner-incoming .inner-content {
+  background-color: #fe5da3;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 5px;
 }
 
 .inner-name {
@@ -298,56 +309,19 @@ h1 {
   line-height: 1.4;
 }
 
-.inner-foot {
-  border-top: 1px solid #ddd;
-  padding-top: 10px;
-}
-
-.chat .inner-form {
+.inner-images {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  margin-left: auto;
 }
 
-.chat .inner-form input {
-  flex: 1;
-  height: 32px;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  padding: 0 10px;
-  outline: none;
+.inner-outgoing .inner-images,
+.inner-incoming .inner-images {
+  background-color: transparent;
+  text-align: right;
 }
 
-.chat .inner-form button {
-  border-radius: 15px;
-  border: 1px solid #fe5da3;
-  background: #fe5da3;
-  color: #fff;
-  height: 32px;
-  padding: 0 10px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.chat .inner-form button i {
-  font-size: 16px;
-}
-
-.fa-solid.fa-face-smile {
-  border-radius: 15px;
-  border: 1px solid #fe5da3;
-  background: #fe5da3;
-  color: #fff;
-  height: 32px;
-  width: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 16px;
-  margin-left: 10px;
-}
-
-.chat .inner-body .inner-images img {
+.inner-images img {
   width: 80px;
   height: 80px;
   object-fit: contain;
@@ -358,20 +332,81 @@ h1 {
   display: inline-block;
 }
 
-.chat .inner-body .inner-outgoing .inner-images {
+.inner-foot {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
   display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  margin-left: auto;
-  text-align: right;
+  align-items: center;
 }
 
-.chat .inner-body .inner-outgoing .inner-images img {
-  margin: 0 0 5px 5px; /* Adjust margin for outgoing images */
+.chat .inner-form {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
+.chat .inner-form input {
+  flex-grow: 1;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.chat .inner-form label,
+.chat .inner-form .button-icon,
+.chat .inner-form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 15px;
+  height: 32px;
+  width: 32px;
+  margin-left: 10px;
+  background: #fe5da3;
+  border: 1px solid #fe5da3;
+  color: #fff;
+}
+
+.chat .inner-form label {
+  margin-left: 0;
+}
+
+.chat .inner-form button {
+  padding: 0;
+}
+
+.chat .inner-form button i,
+.fa-solid.fa-face-smile i,
+.fa-solid.fa-image i {
+  font-size: 16px;
+}
+
+.chat .inner-preview-images {
+  position: relative;
+}
+
+.chat .inner-preview-images .label-container,
+.chat .inner-preview-images .input-container {
+  display: none;
+}
+
+.chat .inner-preview-images .image-preview {
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+}
+
+.chat .inner-preview-images .image-preview-item {
+  width: 90px;
+  background-size: contain;
+}
 
 /* End Chat */
+
+
 
 /* Emoji Picker Tooltip */
 .tooltip {
