@@ -313,6 +313,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   margin-left: auto;
+  cursor: pointer;
 }
 
 .inner-outgoing .inner-images,
