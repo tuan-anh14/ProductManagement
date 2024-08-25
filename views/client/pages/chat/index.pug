@@ -12,14 +12,12 @@ block main
 
         .row
             .col-12
-                .chat(my-id=user.id)
-                    //- .inner-head
-                    //-     .inner-avatar EY
-                    //-     .inner-name Em Yêu
+                .chat(my-id=(user && user.id))
                     .inner-body
                         each chat in chats
-                            div(class=(chat.infoUser.id == user.id ? "inner-outgoing" : "inner-incoming"))
-                                if(chat.infoUser.id != user.id)
+                            - const isOutgoing = chat.infoUser && user && chat.infoUser.id == user.id;
+                            div(class=(isOutgoing ? "inner-outgoing" : "inner-incoming"))
+                                if(chat.infoUser && !isOutgoing)
                                     .inner-name #{chat.infoUser.fullName}
                                 if(chat.content)
                                     .inner-content
@@ -45,9 +43,9 @@ block main
                             label(
                                 for="file-upload-with-preview-upload-image"
                                 class="btn btn-light mx-2 mb-0")
-                                <i class="fa-solid fa-image"></i>
+                                i.fa-solid.fa-image
                             span(class="button-icon btn btn-light mx-2")
-                                <i class="fa-solid fa-face-smile"></i>
+                                i.fa-solid.fa-face-smile
                             button
                                 i.fa-solid.fa-paper-plane
 

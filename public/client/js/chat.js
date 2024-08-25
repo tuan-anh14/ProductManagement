@@ -6,8 +6,6 @@ const upload = new FileUploadWithPreview.FileUploadWithPreview("upload-image", {
   maxFileCount: 6,
 });
 
-// End File Upload With Preview
-
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
 if (formSendData) {
@@ -32,9 +30,11 @@ if (formSendData) {
 
 // SERVER_RETURN_MESSAGE
 socket.on("SERVER_RETURN_MESSAGE", (data) => {
-  const myId = document.querySelector("[my-id]").getAttribute("my-id");
+  const myId = document.querySelector("[my-id]")?.getAttribute("my-id");
   const body = document.querySelector(".chat .inner-body");
   const boxTyping = document.querySelector(".inner-list-typing");
+
+  if (!myId || !body || !boxTyping) return;
 
   const div = document.createElement("div");
 
@@ -42,7 +42,7 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
   let htmlContent = "";
   let htmlImages = "";
 
-  if (myId == data.userId) {
+  if (myId === data.userId) {
     div.classList.add("inner-outgoing");
   } else {
     div.classList.add("inner-incoming");
@@ -50,35 +50,27 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
   }
 
   if (data.content) {
-    htmlContent = `
-    <div class="inner-content">${data.content}</div>
-    `;
+    htmlContent = `<div class="inner-content">${data.content}</div>`;
   }
 
   if (data.images) {
     htmlImages += `<div class="inner-images">`;
-
     for (const image of data.images) {
       htmlImages += `<img src=${image}>`;
     }
-
     htmlImages += `</div>`;
   }
 
-  div.innerHTML = `
-    ${htmlFullName}
-    ${htmlContent}
-    ${htmlImages}
-    `;
+  div.innerHTML = `${htmlFullName}${htmlContent}${htmlImages}`;
 
   body.insertBefore(div, boxTyping);
 
   body.scrollTop = body.scrollHeight;
-  
+
   // Preview Image
-  const boxImages = div.querySelector(".inner-images")
-  if(boxImages){
-    const gallery = new Viewer(boxImages);
+  const boxImages = div.querySelector(".inner-images");
+  if (boxImages) {
+    new Viewer(boxImages);
   }
 });
 
@@ -87,21 +79,16 @@ const bodyChat = document.querySelector(".chat .inner-body");
 if (bodyChat) {
   bodyChat.scrollTop = bodyChat.scrollHeight;
 }
-// End Scroll chat to bottom
 
 // Show typing
 var timeOut;
 const showTyping = () => {
   socket.emit("CLIENT_SEND_TYPING", "show");
-
   clearTimeout(timeOut);
-
   timeOut = setTimeout(() => {
     socket.emit("CLIENT_SEND_TYPING", "hidden");
   }, 3000);
 };
-
-// End show typing
 
 // Emoji picker
 
@@ -111,7 +98,6 @@ const tooltip = document.querySelector(".tooltip");
 
 if (buttonIcon && tooltip) {
   Popper.createPopper(buttonIcon, tooltip);
-
   buttonIcon.onclick = () => {
     tooltip.classList.toggle("shown");
   };
@@ -146,7 +132,6 @@ if (emojiPicker && inputChat) {
     showTyping();
   });
 }
-// End emoji picker
 
 // SERVER_RETURN_TYPING
 const elementListTyping = document.querySelector(".chat .inner-list-typing");
@@ -156,7 +141,6 @@ if (elementListTyping) {
       const exitsTyping = elementListTyping.querySelector(
         `[user-id="${data.userId}"]`
       );
-
       if (!exitsTyping) {
         const boxTyping = document.createElement("div");
         const bodyChat = document.querySelector(".chat .inner-body");
@@ -164,13 +148,13 @@ if (elementListTyping) {
         boxTyping.setAttribute("user-id", data.userId);
 
         boxTyping.innerHTML = `
-            <div class="inner-name">${data.fullName}</div>
-            <div class="inner-dots">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          `;
+          <div class="inner-name">${data.fullName}</div>
+          <div class="inner-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>`;
+          
         elementListTyping.appendChild(boxTyping);
         bodyChat.scrollTop = bodyChat.scrollHeight;
       }
@@ -184,13 +168,9 @@ if (elementListTyping) {
     }
   });
 }
-// END SERVER_RETURN_TYPING
 
 // Preview Image
-const chatBody = document.querySelector(".chat .inner-body")
-
-if(chatBody){
-  const gallery = new Viewer(chatBody);
+const chatBody = document.querySelector(".chat .inner-body");
+if (chatBody) {
+  new Viewer(chatBody);
 }
-// End Preview Image
-
