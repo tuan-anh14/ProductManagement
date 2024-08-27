@@ -6,7 +6,7 @@ if (listBtnAddFriend.length > 0) {
       button.closest(".box-user").classList.add("add");
 
       const userId = button.getAttribute("btn-add-friend");
-      console.log(userId);
+      // console.log(userId);
 
       socket.emit("CLIENT_ADD_FRIEND", userId)
     });
@@ -22,10 +22,26 @@ if (listBtnCancelFriend.length > 0) {
       button.closest(".box-user").classList.remove("add");
 
       const userId = button.getAttribute("btn-cancel-friend");
-      console.log(userId);
+      // console.log(userId);
 
       socket.emit("CLIENT_CANCEL_FRIEND", userId)
     });
   });
 }
 // Hết Chức năng huỷ yêu cầu
+
+// Chức năng từ chối kết bạn
+const listBtnRefuseFriend = document.querySelectorAll("[btn-refuse-friend]");
+if (listBtnRefuseFriend.length > 0) {
+  listBtnRefuseFriend.forEach((button) => {
+    button.addEventListener("click", () => {
+      button.closest(".box-user").classList.add("refuse");
+
+      const userId = button.getAttribute("btn-refuse-friend");
+      // console.log(userId);
+
+      socket.emit("CLIENT_REFUSE_FRIEND", userId)
+    });
+  });
+}
+// Hết Chức năng từ chối kết bạn
