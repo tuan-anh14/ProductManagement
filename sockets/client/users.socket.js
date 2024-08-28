@@ -42,6 +42,18 @@ module.exports = async (res) => {
           }
         );
       }
+
+      // Lấy độ dài acceptFriends của B trả về cho B
+      const infoUserB = await User.findOne({
+        _id: userId,
+      });
+
+      const lengthAcceptFriends = infoUserB.acceptFriends.length;
+
+      socket.broadcast.emit("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", {
+        userId: userId,
+        lengthAcceptFriends: lengthAcceptFriends,
+      });
     });
 
     // Người dùng huỷ yêu cầu kết bạn
@@ -148,17 +160,17 @@ module.exports = async (res) => {
             _id: myUserId,
           },
           {
-            $push: { 
+            $push: {
               friendList: {
-                user_id: userId, 
-                room_chat_id: ""
-              }
-             },
+                user_id: userId,
+                room_chat_id: "",
+              },
+            },
             $pull: { acceptFriends: userId },
           }
         );
       }
-      
+
       // Thêm {user_id, room_chat_id} của B vào friendList của A
       //   Xoá id của B trong requestFriends của A
       const existUserBInA = await User.findOne({
@@ -172,12 +184,12 @@ module.exports = async (res) => {
             _id: userId,
           },
           {
-            $push: { 
+            $push: {
               friendList: {
-                user_id: myUserId, 
-                room_chat_id: ""
-              }
-             },
+                user_id: myUserId,
+                room_chat_id: "",
+              },
+            },
             $pull: { requestFriends: myUserId },
           }
         );

@@ -65,7 +65,6 @@ module.exports.request = async (req, res) => {
   });
 };
 
-
 // [GET] /users/accept
 module.exports.accept = async (req, res) => {
   // Socket
