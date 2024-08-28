@@ -73,3 +73,65 @@ socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND", (data) => {
 });
 
 // END SERVER_RETURN_LENGTH_ACCEPT_FRIEND
+
+// SERVER_RETURN_INFO_ACCEPT_FRIEND
+
+socket.on("SERVER_RETURN_INFO_ACCEPT_FRIEND", (data) => {
+  const dataUsersAccept = document.querySelector("[data-users-accept]");
+  const userId = dataUsersAccept.getAttribute("data-users-accept");
+
+  if (userId == data.userId) {
+    // Vẽ user ra giao diện
+    const newBoxUser = document.createElement("div");
+    newBoxUser.classList.add("col-6");
+
+    newBoxUser.innerHTML = `
+      <div class="box-user">
+          <div class="inner-avatar">
+            <img src="/client/images/avatar.jpg" alt="${data.infoUserA.fullName}">
+          </div>
+          <div class="inner-info">
+            <div class="inner-name">${data.infoUserA.fullName}</div>
+            <div class="inner-buttons">
+              <button 
+                class="btn btn-sm btn-primary mr-1" 
+                btn-accept-friend="${data.infoUserA._id}">
+                  Chấp nhận
+              </button>
+              <button 
+                class="btn btn-sm btn-secondary mr-1" 
+                btn-refuse-friend="${data.infoUserA._id}">
+                  Xoá
+              </button>
+              <button 
+                class="btn btn-sm btn-secondary mr-1" 
+                btn-deleted-friend="${data.infoUserA._id}" disabled="">
+                  Đã xoá
+              </button>
+              <button 
+                class="btn btn-sm btn-primary mr-1" 
+                btn-accepted-friend="${data.infoUserA._id}" disabled="">
+                  Đã chấp nhận
+              </button>
+            </div>
+          </div>
+        </div>
+    `;
+
+    dataUsersAccept.appendChild(newBoxUser);
+    // Hết vẽ user ra giao diện
+
+    // Xoá lời mời kết bạn
+    const btnRefuseFriend = newBoxUser.querySelector("[btn-refuse-friend]");
+    btnRefuseFriend.addEventListener("click", () => {
+      btnRefuseFriend.closest(".box-user").classList.add("refuse");
+
+      const userId = btnRefuseFriend.getAttribute("btn-refuse-friend");
+
+      socket.emit("CLIENT_REFUSE_FRIEND", userId);
+    });
+    // Hết Xoá lời mời kết bạn
+  }
+});
+
+// END SERVER_RETURN_INFO_ACCEPT_FRIEND
