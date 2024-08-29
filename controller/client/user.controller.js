@@ -76,6 +76,13 @@ module.exports.loginPost = async (req, res) => {
 
   res.cookie("tokenUser", user.tokenUser);
 
+  await User.updateOne(
+    { _id: user.id },
+    {
+      statusOnline: "online",
+    }
+  );
+
   // Lưu user_id vào collection carts
   await Cart.updateOne(
     {
@@ -90,7 +97,14 @@ module.exports.loginPost = async (req, res) => {
 };
 
 // [GET] /user/logout
-module.exports.logout = (req, res) => {
+module.exports.logout = async (req, res) => {
+  await User.updateOne(
+    { _id: res.locals.user.id },
+    {
+      statusOnline: "offline",
+    }
+  );
+
   res.clearCookie("tokenUser");
 
   res.redirect("/");
