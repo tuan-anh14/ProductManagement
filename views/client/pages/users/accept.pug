@@ -11,7 +11,7 @@ block main
                 +box-head("Lời mời kết bạn")
 
         .row(data-users-accept=user.id)
-            .col-6
+            .col-6(user-id=user.id)
                 each user in users
                     div(class="box-user add")
                         div(class="inner-avatar")
